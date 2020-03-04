@@ -1,0 +1,146 @@
+-*- mode: org -*-
+#+title: Assignment 01
+#+language: en
+#+options: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t d:(not "HINT")
+#+startup: entitiespretty showeverything
+#+setupfile: theme-bigblow.setup
+
+:HINT:
+ Click your mouse on the links below, or with your cursor somewhere in them,
+ press the Enter key.
+
+[[elisp:(relocate-file-to-work-folder)][Relocate File to Work Folder]]
+
+[[elisp:(find-file-other-window%20"generic-instructions.txt")][Read Instructions]]
+
+[[elisp:(browse-url-of-file%20(org-html-export-to-html))][Export to HTML and Browse]]
+
+[[elisp:(org-clock-report%201)][Insert/Update Clock Summary Report]]
+:END:
+* Exercises
+** TODO CRC
+#+begin_note
+  This is the first of many exercises/problems/puzzles to come, always displayed
+  in this type of yellow-background box.
+
+  Propose a connection between discrete mathematics and the image below.
+  (This is a \ldquo{}free association\rdquo exercise --- there is no \ldquo{}right\rdquo answer.)
+#+end_note
+
+#+ATTR_HTML: :alt Desert :title What is the meaning of this?!
+  [[https://rickneff.github.io/img/desert.jpg]]
+#+begin_info
+  The purpose of discrete mathematics is to create a finite scope of a large
+  problem in order to come upon a solution. This relates to the above image in
+  that the movement of massive sand dunes can be broken down to the
+  movement of their individual grains. Grainular math is more discrete then dune
+  math so to speak.
+#+end_info
+** TODO DGZ
+#+begin_note
+  The operation called /dehydration/ takes a word and deletes all letters in it
+  from H to O. What is the original (rehydrated) text of this dehydrated
+  sequence of words?
+
+  TE TE AS CE TE WARUS SAD T TA OF AY TGS F SES AD SPS AD SEAG WAX F CABBAGES
+  AD GS AD WY TE SEA S BG T AD WETER PGS AVE WGS
+#+end_note
+#+begin_info
+  I will begin this problem by identifying all the letters that have been
+  "dehydrated". All letters from H to O (H20) means H I J K L M N and O.
+  Next I will rehydrate the words that probably only have one rehydrated
+  solution; WARUS becomes WALRUS and CABBAGES remain CABBAGES. From this
+  point I attempted to search the different word combinations with the
+  given letters and the letters between h and o. This resulted in about
+  10 different possibilities for nearly each word. After stewing over these
+  for a while I searched walrus cabbage and lo-and-behold found a poem.
+  THE TIME HAS COME, THE WALRUS SAID, TO TALK OF MANY THINGS OF SHOES AND
+  SHIPS AND SEALING WAX OF CABBAGES AND KINGS AND WHY THE SEA IS BOILING HOT
+  AND WHETHER PIGS HAVE WINGS.
+#+end_info
+* Problems
+** TODO CHJ
+#+begin_note
+   :PROPERTIES:
+   :ID:       1131b553-5f82-43e5-9c20-b672f0508ae7
+   :END:
+  Let $n / 0$ be infinity, for any positive integer /n/.
+
+  What English word has the largest /finite/ consonant-vowel-ratio (CVR)? For
+  example, the CVRs of the words (including the TLA) in the previous sentence
+  are 3:1, 5:2, 3:1, 2:1, 2:1, 5:2, 1:1, 2:1, 3:2, 2:3, and infinity (3:0).
+#+end_note
+#+begin_info
+  The largest FINITE consonant-vowel-ratio word that I could find was strengths
+  coming in with 8 consonants and just 1 vowel. An example of a non-finite CVR
+  could be slyly.
+#+end_info
+** TODO DZB
+#+begin_note
+  In the figure below the innermost circle has radius 1. It is circumscribed by
+  an equilateral triangle, which is circumscribed by a circle, which is
+  circumscribed by a square, which is circumscribed by yet another circle, and
+  so forth.
+
+  What is the radius of the outermost circle?
+#+end_note
+#+ATTR_HTML: :alt Limiting Radius :title Circumscribed Polygons and Circles
+  [[https://rickneff.github.io/img/circumscribed-polygons-and-circles.png]]
+#+begin_info
+ctrl x + cntrl e on function (el)
+then hit comma single quote to enter elisp environment
+hit comma comma to get output
+#+begin_src elisp
+  (defun findR (inR sides)
+    (/ inR (cos (degrees-to-radians (/ 360 (* 2 sides)))))
+  )
+  (let ((m 1))
+    (loop for i from 3 to 10000000
+    do (setq m (findR m i))
+    finally return m))
+
+
+#+end_src
+
+#+results:
+: 7.900967654917222
+
+#+end_info
+* Puzzles
+** TODO DOK
+#+begin_note
+  Pick a number (a positive integer). Form the product of that number, one more
+  than that number, and one more than twice that number. Repeat for several
+  different numbers. There is a pattern to these products. What is it?
+#+end_note
+*** Rephrase
+    :PROPERTIES:
+    :ID:       8c7d8c9b-afcc-4aa9-bbd6-bb97294bc854
+    :END:
+    Pick a positive integer. Mulitply that number by itself, iteself plus one.
+    and two times itself plus one. Repeat for several different numbers.
+    What is the pattern to these products?
+*** Approach
+    | I | I + 1 | 2I + 1 |   P |
+    |---+-------+--------+-----|
+    | 1 |     2 |      3 |   6 |
+    | 2 |     3 |      5 |  30 |
+    | 3 |     4 |      7 |  84 |
+    | 4 |     5 |      9 | 180 |
+    | 5 |     6 |     11 | 330 |
+    | 6 |     7 |     13 | 546 |
+*** Solution
+    Each product is divisible by 6.
+*** Proof
+    6/6 = 1
+    30/6 = 5
+    84/6 = 14
+    180/6 = 30
+    Interestingly enough, the difference between the products/6 is the original
+    integer squared. 5 -1 = 4 ... 4 = 2 x 2 etc.
+** CJF
+*** Rephrase
+    What does 654321 CLAHCK other than they both follow the \ldquo{}length 6\rdquo pattern?
+*** Approach
+*** Solution
+*** Proof
