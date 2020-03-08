@@ -340,8 +340,8 @@ cursor somewhere in it, press the Enter key.
 | # | The course tracker table in my syllabus-portfolio.txt file     | Grade | Instructor |
 | # | is an honest and true record of my work in this course so far. | Claim | Grade      |
 |---+----------------------------------------------------------------+-------+------------|
-| # | Signed: Samuel Pack                                            |  B    |            |
-| # |                                                                |       |            |
+| # | Signed: Samuel Pack                                            | C     | C          |
+| # | (Conditional on finishing XFO (require 'test-rns) and XGG)     | C     | C          |
 |---+----------------------------------------------------------------+-------+------------|
 @@html:<br /><br /><br />@@
 @@latex:\pagebreak@@
