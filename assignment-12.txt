@@ -1,0 +1,467 @@
+-*- mode: org -*-
+#+title: Assignment 12
+#+subtitle: VWX Graphs II
+#+language: en
+#+options: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t d:(not "HINT")
+#+startup: entitiespretty showeverything
+#+setupfile: theme-bigblow.setup
+
+:HINT:
+ Click your mouse on the links below, or with your cursor somewhere in them,
+ press the Enter key.
+
+[[elisp:(relocate-file-to-work-folder)][Relocate File to Work Folder]]
+
+[[elisp:(find-file-other-window "generic-instructions.txt")][Read Instructions]]
+
+[[elisp:(browse-url-of-file (org-html-export-to-html))][Export to HTML and Browse]]
+
+[[elisp:(org-clock-report 1)][Insert/Update Clock Summary Report]]
+:END:
+* Exercises
+** DONE HAX
+   CLOSED: [2020-04-07 Tue 18:42]
+#+begin_note
+  What are /m/ and /n/ for the three /K_{m,n}/ graphs in figures 87, 88 and 89,
+  in VWQ?
+#+end_note
+#+begin_info
+  M is the nodes on the top half of the graph while n is the nodes on the
+  bottom half.
+#+end_info
+** DONE HKE
+   CLOSED: [2020-04-07 Tue 18:42]
+#+begin_note
+  Investigate bipartite graphs and complete bipartite graphs. What kinds of
+  applications fit these types of graphs?
+#+end_note
+#+begin_info
+  The representation of data. M contains data to be searched for while
+  n contains the data, kinda like a pointer. Algorithms then match the two
+  sets.
+#+end_info
+** DONE KBB
+   CLOSED: [2020-04-07 Tue 18:42]
+#+begin_note
+  What would a /tri/-partite graph look like? An /n/-partite graph?
+#+end_note
+#+begin_info
+  Tri-partite: three sets of nodes composed so that no two nodes within the
+  same set are adjacent.
+  N-partite: N set of nodes composed so that no two nodes within the same
+  set are adjacent.
+#+end_info
+** DONE HRL
+   CLOSED: [2020-04-07 Tue 18:43]
+#+begin_note
+  Draw this small graph having 8 nodes and 13 links:
+
+: pq pn qn pt qt et dt de me mn mc cd cn
+:HINT:
+  - Hint :: To draw this graph neatly, think Argyle!
+:END:
+#+end_note
+#+begin_info
+#+begin_src dot :file graph121.png
+  graph {
+  size="3.0,3.0"
+  bgcolor=transparent
+  node [shape=circle fontname=Monospace]
+  "p" -- "q"
+  "p" -- "n"
+  "q" -- "n"
+  "p" -- "t"
+  "q" -- "t"
+  "e" -- "t"
+  "d" -- "t"
+  "d" -- "e"
+  "m" -- "e"
+  "m" -- "n"
+  "m" -- "c"
+  "c" -- "d"
+  "c" -- "n"
+}
+#+end_src
+
+#+results:
+[[file:graph121.png]]
+
+#+end_info
+** DONE KHO
+   CLOSED: [2020-04-07 Tue 18:43]
+#+begin_note
+  Describe /H/ in terms of subsets of /G/ if /G/ = =[[a b c d e f g h i j]
+             [[a b] [a c] [a g] [b d] [b f] [b e] [c d] [c f] [c g] [c h]=
+              =[d e] [d g] [d h] [e i] [e j] [f i] [g h] [h i] [i j]]]=.
+
+  Graph /H/ is shown in figure 93 in VWS.
+#+end_note
+#+begin_info
+  [EI] [GH] [ABCDEGH] [DE] [DH] [AB] [AC] [AG] [BD] [BE] [CD] [CH]
+#+end_info
+** DONE HLX
+   CLOSED: [2020-04-07 Tue 18:44]
+#+begin_note
+  Since graphs are defined in terms of sets, define *graph intersection*
+  accordingly. Give an example.
+#+end_note
+#+begin_info
+Let G and H be graphs where G = (N_1 , L_1) and H = (N_2 , L_2).
+
+G ∩ H = {n: n ∈ N_1 and n ∈ N_2 and l: l ∈ N_2 and l ∈ L_2 }
+
+Given a graph G:
+
+1— 2
+\ / \
+ 3   4
+
+and the graph H:
+
+  2
+ / \
+3   4–5
+
+G ∩ H would be
+
+  2
+ / \
+3   4
+#+end_info
+** DONE HBE
+   CLOSED: [2020-04-07 Tue 18:45]
+#+begin_note
+  A *planar graph* is a graph that can be embedded in the plane, i.e., it can be
+  drawn on the plane in such a way that its links intersect only at their
+  endpoints. In other words, it can be drawn in such a way that no link lines
+  cross each other.
+
+  True or false, the RSA graph is a planar graph.
+:HINT:
+  - Hint :: To save you the trouble of searching, the RSA graph is shown in VWB.
+            Also, look at the K_4 graph(s) in VWM before leaping to an erroneous
+            conclusion! (The key phrase is \ldquo{}*can* be drawn\rdquo.)
+:END:
+#+end_note
+#+begin_info
+  False. If C and M or E and D were swapped, then it could be a planar graph.
+#+end_info
+
+#+BEGIN_SRC dot :file rsa.png
+  graph {
+    bgcolor=transparent
+    rankdir=LR
+    n -- p -- q -- t -- e -- d
+    c -- m -- e
+    c -- n -- m
+    rankdir=TB
+    p -- t -- d
+    c -- d
+    n -- q
+   {rank=same m c}
+   {rank=same d e}
+   {rank=same p q}
+  }
+#+END_SRC
+
+#+results:
+[[file:rsa.png]]
+
+* Problems
+  Note: * means optional. If it\rsquo{}s not starred, it\rsquo{}s required.
+** DONE HJS
+   CLOSED: [2020-04-07 Tue 18:45]
+#+begin_note
+  /Q_n/ graphs have /2^n/ nodes. How many links do /Q_n/ graphs have?
+:HINT:
+  The answer is a non-trivial function of /n/.
+:END:
+#+end_note
+#+begin_info
+  Q_1 = 2 nodes one link ... Q_2 = 4 nodes 4 links ... Q_3 = 8 nodes 12 links
+  n*2^(n-1)
+#+end_info
+** DONE KHQ
+   CLOSED: [2020-04-07 Tue 18:45]
+#+begin_note
+  In what sense is a /K_{3,3}/ like a /K_5/?
+:HINT:
+ - Hint :: The latter was said to come last but not least above --- but it /is/
+           least in this sense.
+:END:
+#+end_note
+#+begin_info
+  They are both complete graphs.
+#+end_info
+** DONE AGD *
+   CLOSED: [2020-04-07 Tue 18:46]
+#+begin_note
+  The following code creates adjacency lists. Try it out on the
+  =graph-11-27-links= list. Add to this code the functionality necessary to
+  building the above adjacency-list table. (Search for \ldquo{}In adjacency-list form:\rdquo
+  in VWR.)
+
+#+BEGIN_SRC emacs-lisp :results silent
+  (defun make-adjacency-list (node links)
+    "Make the adjacency list of a node by collecting
+  all the nodes it's connected to in links."
+    (loop for link in links
+          if (= node (car link))
+          collect (cdr link)))
+
+  (defun make-adjacency-list-in-reverse (node links)
+    "Make the reverse adjacency list of a node by collecting
+  all the nodes connected to it in links."
+    (loop for link in links
+          if (= node (cdr link))
+          collect (car link)))
+
+  (defun make-adjacency-lists (nodes links)
+    "Make adjacency lists given a graph's nodes and links
+  by collecting the adjacency lists and reverse adjacency lists
+  for each of the graph's nodes, removing any duplicates found."
+    (let ((alists nil) the-nodes-alist)
+      (loop for node in nodes
+            do (setq the-nodes-alist
+                     (remove-duplicates
+                      (nconc (make-adjacency-list node links)
+                             (make-adjacency-list-in-reverse node links)))
+                     alists (nconc alists (list (cons node the-nodes-alist)))))
+      alists))
+
+   (defun make-adj-list-table (nodes links)
+   "Makes an adjacency list table"
+   (let ((alists nil) the-nodes-alist)
+         (mapcar (lambda (node)
+         (progn
+         (setq
+            AL (format "%s" (make-adjacency-list node links))
+            AL-R (format "%s" (make-adjacency-list-in-reverse node links))
+            merge (sort (remove-duplicates
+                         (nconc (make-adjacency-list node links) (make-adjacency-list-in-reverse node links))
+                        )#'<)
+            row (list node AL AL-R merge)
+            alists (nconc alists (list row))
+         ))
+      ) nodes)
+alists))
+#+END_SRC
+#+end_note
+#+begin_info
+#+begin_src elisp
+  (setq graph-11-27-links '(
+   (1 . 2) (1 . 9) (1 . 10) (1 . 11) (2 . 3) (2 . 4) (2 . 5)
+   (2 . 9) (2 . 10) (2 . 11) (3 . 4) (3 . 10) (3 . 11)
+   (4 . 5) (4 . 10) (4 . 11) (5 . 6) (5 . 7) (5 . 9) (6 . 7)
+   (6 . 9) (7 . 8) (7 . 9) (8 . 10) (8 . 9) (9 . 10) (10 . 11))
+      graph-11-27-nodes '(1 2 3 4 5 6 7 8 9 10 11))
+
+(make-adj-list-table graph-11-27-nodes graph-11-27-links)
+#+end_src
+
+#+results:
+|  1 | (2 9 10 11)     | nil           | (2 9 10 11)       |
+|  2 | (3 4 5 9 10 11) | (1)           | (1 3 4 5 9 10 11) |
+|  3 | (4 10 11)       | (2)           | (2 4 10 11)       |
+|  4 | (5 10 11)       | (2 3)         | (2 3 5 10 11)     |
+|  5 | (6 7 9)         | (2 4)         | (2 4 6 7 9)       |
+|  6 | (7 9)           | (5)           | (5 7 9)           |
+|  7 | (8 9)           | (5 6)         | (5 6 8 9)         |
+|  8 | (10 9)          | (7)           | (7 9 10)          |
+|  9 | (10)            | (1 2 5 6 7 8) | (1 2 5 6 7 8 10)  |
+| 10 | (11)            | (1 2 3 4 8 9) | (1 2 3 4 8 9 11)  |
+| 11 | nil             | (1 2 3 4 10)  | (1 2 3 4 10)      |
+
+#+end_info
+** TODO HSG *
+#+begin_note
+  Write the code to =make-adjacency-matrix= given a graph\rsquo{}s nodes and links.
+#+end_note
+#+begin_info
+
+#+end_info
+** TODO ANA *
+#+begin_note
+  Armed with a knowledge of what complete graphs (the K_n) are, and what
+  subgraphs and graph representations are, you are ready to apply that
+  knowledge.
+
+  Another name for a complete graph is a word that in high school is often
+  mispronounced as /click/. Making it rhyme with the second syllable of the
+  words /antique/ or /technique/ is the correct way to pronounce /clique/.
+
+  Think about how to /verify/ this graph property.
+
+  To give an operational definition, a clique is a subgraph of a given graph in
+  which every two nodes are connected by a link. An /anti/-clique is a subgraph
+  in which every two nodes are /not/ connected by a link. (Note that this is the
+  same as saying that /no/ two nodes in this subgraph are connected. Or in other
+  words, they form an /independent set/ of nodes --- nodes that are all
+  independent of each other.) Searching through a specified graph, a verifier
+  would check the alleged "clique-ness" or "anti-clique-ness" of a given list of
+  nodes.
+
+  Use the code below as a starting point. Decide how to represent a graph. Use
+  the =link-exists= predicate as is, or change it to suit. If you decide as is
+  is good enough, you will still need to implement the =get-adjacency-list=
+  function. Test several graphs and various-sized candidate node lists using a
+  suitably implemented =check-clique-or-anti-clique= function.
+
+#+BEGIN_SRC emacs-lisp
+  (defun link-exists (graph-representation node1 node2)
+    "Given a graph representation, is there a link between node1 and node2?"
+    (not
+     (null
+      (or
+       (member node2 (get-adjacency-list graph-representation node1))
+       (member node1 (get-adjacency-list graph-representation node2))))))
+
+  (defun check-clique-or-anti-clique (graph-representation nodes anti)
+    "Checks if the represented graph contains a subgraph consisting of
+  the given nodes that is a clique (if anti is nil) or an anti-clique
+  (if anti is t). Returns t or nil appropriately."
+     ;; ... your code goes here
+    )
+#+END_SRC
+#+end_note
+#+begin_info
+  Your answer goes here.
+#+end_info
+** DONE KSI
+   CLOSED: [2020-04-07 Tue 18:47]
+#+begin_note
+  Not to be confused with *graph intersection*, the *intersection graph* of a
+  collection of sets A_1, A_2, \dots, A_n is the graph that has a node for each of
+  these sets and has a link connecting the nodes representing two sets if these
+  sets have a nonempty intersection.
+
+  Construct the intersection graph of this collection of five sets:
+
+  | Set Name | Set Elements       |
+  |----------+--------------------|
+  | A_1       | [-4 -3 -2 -1 0]    |
+  | A_2       | [-2 -1 0 1 2]      |
+  | A_3       | [-6 -4 -2 0 2 4 6] |
+  | A_4       | [-5 -3 -1 1 3 5]   |
+  | A_5       | [-6 -3 0 3 6]      |
+
+  Draw this graph. What is its degree sequence?
+#+end_note
+#+begin_info
+ #+BEGIN_SRC dot :file intersection.png
+  graph {
+    bgcolor=transparent
+    A_1 -- A_2
+    A_1 -- A_3
+    A_1 -- A_4
+    A_1 -- A_5
+    A_2 -- A_3
+    A_2 -- A_4
+    A_2 -- A_5
+    A_3 -- A_5
+    A_4 -- A_5
+  }
+#+END_SRC
+
+#+results:
+[[file:intersection.png]]
+
+  Its degree sequence is [4 4 4 3 3]
+#+end_info
+** DONE KSQ
+   CLOSED: [2020-04-07 Tue 18:47]
+#+begin_note
+  Construct a graph using the following list of eight words as node labels:
+
+: dine done gone tine tone wind wine wins
+
+  Link two nodes if they differ in only one letter /in the same position/ (e.g.,
+  =wind= and =wins= differ in the fourth letter only, so that defines a link.
+  But =dine= and =tone= differ in the first /and/ second letters, so no link
+  there).
+
+  Randomly select two nodes of this graph. What is the probability that there is
+  a link between those two nodes?
+#+end_note
+#+begin_info
+  The Degree Sequence is [4 3 3 3 3 2 2 2]
+  The probabilty of randomly selecting one of these nodes is
+  4/8, 3/8, 3/8, 3/8, 3/8, 2/8, 2/8, 2/8
+  Making the probability of selecting two nodes with a link between them is
+  11/28
+
+#+BEGIN_SRC dot :file rsa.png
+  graph {
+    bgcolor=transparent
+    dine -- done
+    dine -- tine
+    dine -- wine
+    done -- gone
+    done -- tone
+    gone -- tone
+    tine -- tone
+    tine -- wine
+    wind -- wine
+    wind -- wins
+    wine -- wins
+  }
+#+END_SRC
+
+#+results:
+[[file:rsa.png]]
+
+#+end_info
+** DONE KSC *
+   CLOSED: [2020-04-07 Tue 18:47]
+#+begin_note
+  Generalizing, the Ramsey function /R/ with two parameters, /R(i, j)/, returns the
+  minimum /n/ for which in a /K_n/ graph where the links are colored with two
+  colors, there must exist either an embedded /K_i/ subgraph whose links are all
+  of the first color, or an embedded /K_j/ subgraph whose links are all of the
+  second color. As is fairly easily shown, /R(3, 3) = 6/. Many others of these
+  so-called /Ramsey numbers/ are known and are provable, e.g., /R(4, 4) = 18/ and
+  /R(4, 5) = 25/, but most are not. For example, it is known that R(5, 5) is at
+  least 43 and at most 48, but which number between 43 and 48 is the exact value
+  is unknown. Why is that? Research and describe why we are currently unable to
+  nail this value down. (For starters, [[http://ginger.indstate.edu/ge/RAMSEY/r.5.5.html][Geoff Exoo]] found that there is a /K_{42}/
+  that is link-2-colorable but has no same-colored triangles.)
+#+end_note
+#+begin_info
+  The reason the exact value is unknown is because to show that a given number
+  between 43 and 48 holds true (lets just say 43 for now) 43 choose 2 = 903 edges
+  or 2^903 possible graphs.
+#+end_info
+* Puzzles
+  Puzzle, to be precise.
+** DONE HTR
+   CLOSED: [2020-04-07 Tue 19:04]
+#+begin_note
+  What does it mean to say that \({\sf VWX}\) has
+: ([2 1 1] [2 2 2 1 1] [4 1 1 1 1])
+  as its list of degree sequences?
+#+end_note
+*** Rephrase
+    What does \([sf VWX])\) have to do with the degree sequence
+    : ([2 1 1] [2 2 2 1 1] [4 1 1 1 1])?
+
+*** Approach
+    Draw em out!
+    [2 1 1] becomes o-o-o
+    [2 2 2 1 1] becomes o-o-o-o-o
+    [4 1 1 1 1] becomes     o
+                            |
+                        o - o - o
+                            |
+                            o
+*** Solution
+    Ahhh. The degree sequences are the shapes of the letters themselves!
+    Each node represents a joint/edge.
+*** Proof
+    Knowing this, my approach could be redrawn to look like this:
+    o   o o   o   o o   o
+     \ /   \ / \ /   \ /
+      o     o   o     o
+                     / \
+                    o   o
+
+                    ...TADAH!

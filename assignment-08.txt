@@ -73,6 +73,40 @@
   You will need working =from-base-27= and =to-base-27= functions, as well as a
   working knowledge of /symbol property lists/ to play with /this/ test code:
 
+#+begin_src elisp :results silent
+  (defun from-base-27 (input)
+  (let* ((x (reverse (number-sequence (length input) 0 -1)))
+         (y (mapcar (lambda (x) (- x ?@)) (string-to-list input))))
+    (apply '+ (mapcar* (lambda (e n) (* n (expt 27 e))) x y))))
+
+(defun rec-div (input)
+  (if (zerop input) nil
+  (append (list (mod input 27)) (rec-div (/ input 27)))))
+
+
+(defun to-base-27 (input)
+  (concat (mapcar (lambda (x) (+ x ?@)) (rec-div input))))
+#+end_src
+
+#+begin_src elisp
+(from-base-27 "AA")
+#+end_src
+
+#+results:
+: 28
+
+#+begin_src elisp :results silent
+   (defun set-rsa-players (n e d)
+   (put 'rsa-players :n n)
+   (put 'rsa-players :e e)
+   (put 'rsa-players :d d)
+)
+#+end_src
+
+#+begin_src elisp :results silent
+  (set-rsa-players 52337 65537 199997)
+#+end_src
+
 #+begin_src elisp
   (defun test-rsa (message-with-spaces)
     (let* ((message (mapconcat 'identity
@@ -95,119 +129,49 @@
        (princ "successfully.\n")
        success))
 #+end_src
+
 :HINT:
   - Hint :: This will be discussed in class.
 :END:
 #+end_note
 #+begin_info
-#+begin_src elisp :results silent
-(defun pow-mod (base power modulus)
-   (let* ((result 1)
-      (base (mod base modulus)))
-      (while (> power 0)
-        (when (oddp power)
-        (setq result (mod (* result base) modulus)))
-        (setq base (mod (* base base) modulus)
-              power (/ power 2))
-      ) result ))
-
-
- (defun rsa-encrypt (message n e &optional encoder)
-  (let* ((message-encoded (funcall (or encoder 'identity) message))
-         (encrypted (pow-mod message-encoded e n)))
-    encrypted))
-
-(defun rsa-decrypt (encrypted n d &optional decoder)
-  (let* ((decrypted (pow-mod encrypted d n))
-         (message-decoded (funcall (or decoder 'identity) decrypted)))
-    message-decoded))
-
-(defun round-trip (message n e d &optional encoder decoder)
-  (equal message
-         (rsa-decrypt (rsa-encrypt message n e encoder)
-                      n d decoder)))
-
-(defalias 'div '/)
-
-(defun abr (n b)
-  (let ((d (div n b))
-        (m (mod n b)))
-    (if (zerop d)
-        (list m)
-      (append (abr d b) (list m)))))
-
-(defun to-base-27 (num-base-10)
-   (mapconcat (lambda (n) (char-to-string (+ ?@ n))) (abr num-base-10 27) ""))
-
-(defun from-base-27 (string-base-27)
-    (reconstruct-number-from-abr (reverse (mapcar (lambda (n) (- n ?@)) string-base-27)) 27))
-
-(defun reconstruct-number-from-abr (list-of-coeff base)
-   (if (null list-of-coeff)
-      0
-      (+ (car list-of-coeff)
-         (* base (reconstruct-number-from-abr (cdr list-of-coeff) base)))))
-#+end_src
 #+begin_src elisp
-  (rsa-encrypt 25 (* 3 11) 3)
+(to-base-27 123)
 #+end_src
 
 #+results:
-: 16
-#+begin_src elisp
-  (rsa-decrypt 25 (* 3 11) 7)
-#+end_src
+: OD
 
-#+results:
-: 31
-#+begin_src elisp
-  (round-trip 83 (* 11 17) 3 107)
-#+end_src
-
-#+results:
-: t
-#+begin_src elisp :results silent
-(setf (get 'rsa-players :p) 11)
-(setf (get 'rsa-players :q) 17)
-(setf (get 'rsa-players :n) (* (get 'rsa-players :p) (get 'rsa-players :q)))
-(setf (get 'rsa-players :t) (* (- (get 'rsa-players :p) 1) (- (get 'rsa-players :q) 1)))
-(setf (get 'rsa-players :e) '13)
-(setf (get 'rsa-players :d) '37)
-
-
-(defun test-rsa (message-with-spaces)
-  (let* ((message (mapconcat 'identity
-                             (split-string message-with-spaces " ") "@"))
-          (n (get 'rsa-players :n))
-          (e (get 'rsa-players :e))
-          (d (get 'rsa-players :d))
-          (encrypted (rsa-encrypt message n e 'from-base-27))
-          (decrypted (rsa-decrypt encrypted n d 'to-base-27))
-          (decrypted-message-with-spaces
-           (mapconcat 'identity (split-string decrypted "@") " "))
-          (success (string= message-with-spaces
-                            decrypted-message-with-spaces)))
-     (princ (format (concat "\"%s\"\nwas encoded and encrypted as\n%s\n"
-                            "then decrypted and decoded as\n\"%s\"\n")
-                    message-with-spaces
-                    encrypted
-                    decrypted-message-with-spaces))
-     (princ (if success "" "un"))
-     (princ "successfully.\n")
-     success))
-#+end_src
-#+begin_src elisp
-  (test-rsa "BJ")
-#+end_src
-
-#+results:
-: t
 #+begin_src elisp
   (from-base-27 "AB")
 #+end_src
 
 #+results:
-: 29
+: 55
+
+#+begin_src elisp
+  (test-rsa "ABC")
+#+end_src
+
+#+begin_src elisp
+  (require 'cl) ; for destructuring-bind
+
+(defun egcd (a b)
+  "Computes the greatest common divisor of a and b recursively.
+   This extended version returns a list of d, x and y, where
+   d = ax + by = gcd(a, b)."
+  (if (zerop b)
+      (list a 1 0)
+    (destructuring-bind (d x y) (egcd b (% a b))
+      (list d y (- x (* (/ a b) y))))))
+
+(defun find-TUMMI (o m)
+  (destructuring-bind (d x y) (egcd o m)
+    (if (/= 1 d)
+        (error "TUMMI of %d mod %d does not exist" o m)
+      (mod x m))))
+#+end_src
+
 
 #+end_info
 * Puzzles
