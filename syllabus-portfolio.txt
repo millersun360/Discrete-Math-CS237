@@ -6,7 +6,8 @@
 #+setupfile: theme-bigblow.setup
 
 :HINT:
-[[elisp:(browse-url-of-file(org-html-export-to-html))][Export to HTML and Browse]] <--- Click your mouse on this link, or with your
+[[elisp:(browse-url-of-file(org-html-export-to-html))][Export to HTML and
+Browse]] <--- Click your mouse on this link, or with your
 cursor somewhere in it, press the Enter key.
 :END:
 
@@ -311,23 +312,23 @@ cursor somewhere in it, press the Enter key.
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
 | # |    4 |  X  |  X  |  X  |  X  | 2498 | 0%  | 0%   |     |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
-| # |    5 |  X  |  X  |  X  |  X  | 3045 | 60% | 90% |     |
+| # |    5 |  X  |  X  |  X  |  X  | 3045 | 60% | 90%  |     |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
-| # |    6 |  X  |  X  |  X  |  X  | 3045 | 50% | 70% |     |
+| # |    6 |  X  |  X  |  X  |  X  | 3045 | 50% | 70%  |     |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
 | # |    7 |  X  |  X  |  X  |  X  | 4008 | 70% | 85%  |     |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
 | # |    8 |  X  |  X  |  X  |  X  | 4008 | 50% | 50%  |     |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
-| # |    9 |  X  |  X  |  X  |     |      |     |      |     |
+| # |    9 |  X  |  X  |  X  |  X  | 5033 |100% | 100% |  X  |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
-| # |   10 |     |     |     |     |      |     |      |     |
+| # |   10 |  X  |  X  |  X  |  X  | 6419 |90%  | 100% |  X  |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
-| # |   11 |     |     |     |     |      |     |      |     |
+| # |   11 |  X  |  X  |  X  |  X  | 7499 |80%  | 100% |  X  |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
-| # |   12 |     |     |     |     |      |     |      |     |
+| # |   12 |  X  |  X  |  X  |  X  | 8449 |80%  | 100% |  X  |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
-| # |   13 |     |     |     |     |      |     |      |     |
+| # |   13 |  X  |  X  |  X  |  X  | 8449+|100% | 100% |  X  |
 |---+------+-----+-----+-----+-----+------+-----+------+-----|
 
   During weeks five, nine, and fourteen, you will make your claims by bringing
@@ -340,7 +341,7 @@ cursor somewhere in it, press the Enter key.
 | # | The course tracker table in my syllabus-portfolio.txt file     | Grade | Instructor |
 | # | is an honest and true record of my work in this course so far. | Claim | Grade      |
 |---+----------------------------------------------------------------+-------+------------|
-| # | Signed: Samuel Pack                                            |  B    |            |
+| # | Signed: Samuel Pack                                            |  A    |            |
 | # |                                                                |       |            |
 |---+----------------------------------------------------------------+-------+------------|
 @@html:<br /><br /><br />@@
@@ -375,15 +376,15 @@ cursor somewhere in it, press the Enter key.
 ** Week 8
 #+INCLUDE: ./assignment-08.txt :only-contents t :lines "8-"
 ** Week 9
-#+xINCLUDE: ./assignment-09.txt :only-contents t :lines "7-"
+#+INCLUDE: ./assignment-09.txt :only-contents t :lines "8-"
 ** Week 10
-#+xINCLUDE: ./assignment-10.txt :only-contents t :lines "7-"
+#+INCLUDE: ./assignment-10.txt :only-contents t :lines "8-"
 ** Week 11
-#+xINCLUDE: ./assignment-11.txt :only-contents t :lines "7-"
+#+INCLUDE: ./assignment-11.txt :only-contents t :lines "8-"
 ** Week 12
-#+xINCLUDE: ./assignment-12.txt :only-contents t :lines "7-"
+#+INCLUDE: ./assignment-12.txt :only-contents t :lines "8-"
 ** Week 13
-#+xINCLUDE: ./assignment-13.txt :only-contents t :lines "7-"
+#+INCLUDE: ./assignment-13.txt :only-contents t :lines "8-"
 
 @@latex:\pagebreak@@
 * Other

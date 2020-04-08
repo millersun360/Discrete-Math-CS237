@@ -1,0 +1,308 @@
+-*- mode: org -*-
+#+title: Assignment 09
+#+subtitle: STU Trees I
+#+language: en
+#+options: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t d:(not "HINT")
+#+startup: entitiespretty showeverything
+#+setupfile: theme-bigblow.setup
+
+:HINT:
+ Click your mouse on the links below, or with your cursor somewhere in them,
+ press the Enter key.
+
+[[elisp:(relocate-file-to-work-folder)][Relocate File to Work Folder]]
+
+[[elisp:(find-file-other-window "generic-instructions.txt")][Read Instructions]]
+
+[[elisp:(browse-url-of-file (org-html-export-to-html))][Export to HTML and Browse]]
+
+[[elisp:(org-clock-report 1)][Insert/Update Clock Summary Report]]
+:END:
+* Exercises
+** DONE LDA
+   CLOSED: [2020-03-05 Thu 15:36]
+#+begin_note
+  Alter the following =let= expression so that it creates the same list using
+  =cons= rather than =list=.
+
+#+BEGIN_SRC elisp :results raw
+  (let ((a 1) (b 2) (c 3) (d 4))
+    (list (+ a b) (/ d b) (- d a) (* c d)))
+#+END_SRC
+
+#+results:
+(3 2 3 12)
+
+#+end_note
+#+begin_info
+#+begin_src elisp :results raw
+  (let ((a 1) (b 2) (c 3) (d 4))
+    (cons (+ a b) (cons (/ d b) (cons (- d a) (cons (* c d) nil)))))
+#+end_src
+
+#+results:
+(3 2 3 12)
+#+end_info
+** DONE SQI
+   CLOSED: [2020-03-05 Thu 15:51]
+#+begin_note
+  Use =cons= to re-implement the =morphifyr= function more efficiently.
+#+end_note
+#+begin_info
+#+begin_src elisp :results silent
+(defun morphifyr (fun lst)
+  (if (null lst)
+      nil
+    (cons (funcall fun (first lst))) (morphifyr fun (rest lst))))
+#+end_src
+#+begin_src elisp
+  (morphify (quote downcase) (quote ("THIS" "IS" "TOO" "LOUD")))
+#+end_src
+
+#+results:
+| this | is | too | loud |
+
+#+end_info
+** DONE LJP
+   CLOSED: [2020-03-05 Thu 16:20]
+#+begin_note
+  Use =car=, =cdr=, and =cons= to re-implement the =prime-list-from-rle-list=
+  function more efficiently.
+:HINT:
+  - Hint :: Think recursion. There are four cases to handle, the base case being
+            when the passed-in rle-list is null.
+:END:
+#+end_note
+#+begin_info
+#+begin_src elisp :results silent
+(defun reconstitute-primes (rle-list)
+  (loop for b in rle-list
+        for n from 2
+        unless (or (zerop b) (and (> b 1) (incf n (- b 1))))
+        collect n))
+
+(defun prime-list-from-rle-list (rle-list limit)
+  (mapcar 'car
+          (remove-if
+           (lambda (x)
+             (zerop (cdr x)))
+           (mapcar* 'cons
+                    (number-sequence 2 limit)
+                    (apply 'append
+                           (mapcar (lambda (x)
+                                     (if (> x 1)
+                                         (make-list x 0)
+                                       (cons x nil)))
+                                   rle-list))))))
+#+end_src
+#+begin_src elisp
+(setq limit 10000
+      p100rle (list 1 1 0 1 0 1 3 1 0 1 3 1 0 1 3 1 5 1 0 1 5 1 3 1 0
+                    1 3 1 5 1 5 1 0 1 5 1 3 1 0 1 5 1 3 1 5 1 7 1 3)
+      got-it-right (equal (reconstitute-primes p100rle)
+                          (prime-list-from-rle-list p100rle limit)))
+#+end_src
+
+#+results:
+: t
+
+#+begin_src elisp
+  (prime-list-from-rle-list p100rle 100)
+#+end_src
+
+#+results:
+| 2 | 3 | 5 | 7 | 11 | 13 | 17 | 19 | 23 | 29 | 31 | 37 | 41 | 43 | 47 | 53 | 59 | 61 | 67 | 71 | 73 | 79 | 83 | 89 | 97 |
+
+#+end_info
+** DONE YGT
+   CLOSED: [2020-03-05 Thu 16:30]
+#+begin_note
+  Construct a binary search tree from the *words* (not the letters) of the phrase
+
+: time flies on wings of lightning
+
+  using dictionary order, inserting words in the order they appear in the
+  phrase. Don\rsquo{}t try to balance the tree (see below).
+
+  What is the *height* of this tree?
+#+end_note
+#+begin_info
+      time
+     /     \
+flies       wings
+     \
+      on
+      /
+    of
+   /
+lightning
+This tree has a height of 4
+#+end_info
+** DONE LUM
+   CLOSED: [2020-03-05 Thu 16:41]
+#+begin_note
+  Which of the above balanced BSTs is represented by the following list?
+#+BEGIN_SRC elisp :results silent
+  (so (cool (are (and) (binary)) (search (kind))) (trees (the) (wonderfully)))
+#+END_SRC
+#+end_note
+#+begin_info
+  The second balanced (heavy) version.
+#+end_info
+* Problems
+  No optional problems this week.
+** DONE SUF
+   CLOSED: [2020-03-05 Thu 17:22]
+#+begin_note
+  How would you write (using map /not/ a loop) an elisp function
+  =number-of-factors= that takes the CSF of a positive integer (in
+  list-of-dotted-pairs form) and returns how many factors that integer has?
+
+#+begin_src elisp
+  (defun number-of-factors (csf)
+    "Takes a CSF like '((2 . 3) (3 . 1) (5 . 2)) and returns 24."
+    ;; ... your ONE line of code goes here
+    )
+#+end_src
+#+end_note
+#+begin_info
+#+begin_src elisp :results silent
+  (defun number-of-factors (csf)
+    "Takes a CSF like '((2 . 3) (3 . 1) (5 . 2)) and returns 24."
+    (apply '* (mapcar (lambda (pf) (1+ (cdr pf))) csf))
+    )
+#+end_src
+
+#+begin_src elisp
+  (number-of-factors (list (cons 2 3) (cons 3 1) (cons 5 2)))
+#+end_src
+
+#+results:
+: 24
+
+#+end_info
+** DONE LNR
+   CLOSED: [2020-03-05 Thu 17:33]
+#+begin_note
+  How would you write (using map /not/ a loop) another elisp function
+  =number-of-factors-alt= that takes the CSF of a positive integer (in
+  vector-of-two-element-lists form) and returns how many factors that integer
+  has?
+
+#+begin_src elisp
+  (defun number-of-factors-alt (csf)
+    "Takes a CSF like [(2 3) (3 1) (5 2)] and returns 24."
+    ;; ... your ONE line of code goes here
+    )
+#+end_src
+#+end_note
+#+begin_info
+#+begin_src elisp :results silent
+  (defun number-of-factors (csf)
+    "Takes a CSF like [(2 3) (3 1) (5 2)] and returns 24."
+    (apply '* (mapcar (lambda (pf) (1+ (cadr pf))) csf))
+    )
+#+end_src
+
+#+begin_src elisp
+  (number-of-factors (vector (list 2 3) (list 3 1) (list 5 2)))
+#+end_src
+
+#+results:
+: 24
+
+#+end_info
+** DONE LDO
+   CLOSED: [2020-03-05 Thu 17:43]
+#+begin_note
+  Investigate what must happen to delete a key from a BST. Is deletion always as
+  fast as insertion?
+#+end_note
+#+begin_info
+  To delete a key, a new path must be formed. It is formed by taking the left most
+  node on the branch right of the key and using it to replace the key and then
+  taking the remainder of that right branch, and making it the new right branch.
+  Deletion is as fast as insertion or slower. The reason being is with insertion you
+  need only find where it belongs. To delete you need to find where it belongs, AND
+  shift any children nodes to their new place in the tree.
+#+end_info
+** DONE YCF
+   CLOSED: [2020-03-05 Thu 17:51]
+#+begin_note
+  Compare and contrast the different nuances in the precise definitions of the
+  terms *full*, *complete* and *balanced* used to describe trees.
+#+end_note
+#+begin_info
+ A binary tree is balanced if for each node it holds that the number of inner
+ nodes in the left subtree and the number of inner nodes in the right subtree
+ differ by at most 1.
+ A complete binary tree is a binary tree in which every level, except possibly
+ the last, is completely filled, and all nodes are as far left as possible.
+ A full binary tree (sometimes proper binary tree or 2-tree) is a tree in
+ which every node other than the leaves has two children.
+#+end_info
+** DONE YZU
+   CLOSED: [2020-03-05 Thu 17:57]
+#+begin_note
+  Investigate various techniques to rebuild unbalanced BSTs to make them
+  balanced. Note that this rebuilding can happen on-the-fly (as items are
+  inserted) or at-the-end (after all initial items are inserted).
+#+end_note
+#+begin_info
+  In investigating I discovered AVL trees which are self balancing through
+  methods called left and right rotation. If a tree is ubalanced to the left
+  a right rotation is performed and visa versa. This operation can be performed
+  on-the-fly as items are inserted or at-the-end after all the initial items
+  inserted.
+#+end_info
+* Puzzles
+  More precisely, a single GPAO:
+** DONE OET
+   CLOSED: [2020-03-05 Thu 18:22]
+   Org Element Tree
+
+   Explore the structure of an org-mode tree by examining the following code
+   that extracts the EPP TLAs from the document structure:
+#+begin_src elisp :results silent
+  (require 'org)
+
+  (defun save-loadable-org-element-tree ()
+    (let ((file-path "oet.el")
+          (org-element-tree (org-element-parse-buffer))
+          (print-circle t))
+      (with-temp-buffer
+        (insert "(setq oet '")
+        (pp org-element-tree (current-buffer))
+        (insert ")\n")
+        (write-file file-path))
+      file-path))
+
+  (defun gather-tlas (&optional org-element-tree)
+    (let ((tlas nil))
+      (org-element-map (or org-element-tree (org-element-parse-buffer))
+          'headline
+        (lambda (x) (if (= 2 (org-element-property :level x))
+                        (push (intern (org-element-property :raw-value x)) tlas))))
+      (apply 'vector (nreverse tlas))))
+#+end_src
+ Interesting. Each entry is numbered. I presume this is the nodes of the tree?
+ Parent numbers are also listed at the end of each entry.
+#+begin_src elisp :results silent
+  (load-file (save-loadable-org-element-tree))
+#+end_src
+
+   Possible question to explore: How is an org element tree stored in memory?
+   It is stored as an .el file which is presumably an org element file.
+
+#+begin_src elisp :results raw
+  (setq tlas (gather-tlas))
+#+end_src
+
+#+results:
+[LDA SQI LJP YGT LUM SUF LNR LDO YCF YZU OET]
+
+   Possible question to explore: How can you tell Exercises from Problems from
+   Puzzles?
+
+   After the headline it states the epp type. Each EPP within its section states
+   which headline it belongs to at the end of its body.

@@ -1,0 +1,279 @@
+-*- mode: org -*-
+#+title: Assignment 11
+#+subtitle: VWX Graphs I
+#+language: en
+#+options: H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t d:(not "HINT")
+#+startup: entitiespretty showeverything
+#+setupfile: theme-bigblow.setup
+
+:HINT:
+ Click your mouse on the links below, or with your cursor somewhere in them,
+ press the Enter key.
+
+[[elisp:(relocate-file-to-work-folder)][Relocate File to Work Folder]]
+
+[[elisp:(find-file-other-window "generic-instructions.txt")][Read Instructions]]
+
+[[elisp:(browse-url-of-file (org-html-export-to-html))][Export to HTML and Browse]]
+
+[[elisp:(org-clock-report 1)][Insert/Update Clock Summary Report]]
+:END:
+* Exercises
+** DONE HST
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  How does allowing cycles imply the existence of more than one path from one
+  graph node to another?
+#+end_note
+#+begin_info
+  Because if a node is gone through twice (as in with a cycle) it could have
+  just as well been traversed only once. This implies the existence of more
+  then one path from graph node to another node.
+#+end_info
+** DONE HTC
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  Which node in the [[https://rickneff.github.io/metaphors-be-with-you.html#outline-container-org53bfa2d][directed graph in VWF]] (figure 62) represents Abu in the
+  ping-pong tournament he was in?
+#+end_note
+#+begin_info
+  D because it has as many arrows pointing at it as it points towards
+  indicating an equal amount of games won as lost.
+#+end_info
+** DONE KPS
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  Do some research and figure out where graphs are used in your major, and describe
+  how a knowledge of graph theory can be beneficial to you in the future.
+#+end_note
+#+begin_info
+  One way in which graphs are used in my major is to determine the shortest path
+  between two computers in a given network. Understanding graph theory would beneficial
+  because it would provide me with the knowledge to create and algorthim that solves
+  for the quickest route.
+#+end_info
+** DONE KWD
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  What is the degree sequence of a *perfect*, full, complete, level-3 binary tree?
+#+end_note
+#+begin_info
+  [2 2 2 1 1 1 1]
+#+end_info
+** DONE KOV
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  Choose a link in the directed tournament graph (figure 62 in HTC). Use all of
+  the /directed adjacency/ vocabulary to describe it.
+#+end_note
+#+begin_info
+  D is adjacent to E, F and G.
+  D is adjacent from A, B and C.
+  If K, I and J go to E F and G from D, then K, I, and J connect D to E, F and G.
+  D is then the initial node of K, I and J
+  E, F and G are terminal nodes of K, I and J.
+#+end_info
+** DONE AGA
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  What can you say about /K_0/?
+#+end_note
+#+begin_info
+  It has 0 Nodes and 0 Links.
+#+end_info
+** DONE KNF
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  What is the degree sequence of the wheel graph W_5? What is it in general for a
+  W_n?
+#+end_note
+#+begin_info
+  W_5 = [5 3 3 3 3 3]
+  W_n = [n 3_1 3_2 ... 3_n]
+#+end_info
+* Problems
+  Note: * means optional. If it\rsquo{}s not starred, it\rsquo{}s required.
+** DONE KDB *
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  List in lisp form all the simple paths (in both representations) from =MT= to
+  =NM=, identifying the shortest path(s) and the longest path(s).
+#+end_note
+#+begin_info
+#+begin_src elisp
+(setq kdb-arcs '([ID MT] [ID WY] [ID NV] [ID UT] [MT WY] [WY UT] [WY CO]
+                 [UT CO] [UT NV] [UT AZ] [CO NM] [AZ NM] [NV AZ])
+      MT-NM-paths '(([MT WY] [WY CO] [CO NM])
+                    ([MT ID] [ID WY] [WY CO] [CO NM])
+                    ([MT ID] [ID UT] [UT WY] [WY CO] [CO NM])
+                    ([MT ID] [ID WY] [WY CO] [CO UT] [UT NV] [NV AZ] [AZ NM])
+                    ())
+)
+#+end_src
+  The shortest path is [MT WY CO NM]
+  The longset path is [MT ID WY CO UT NV AZ NM]
+#+end_info
+** DONE ABR *
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  Directed graphs (/digraphs/ for short) can represent binary relations. Make a
+  connection between the four relation types and the existence or non-existence
+  of certain features in the graph of the relation.
+
+  - Reflexive = /every/ node has a link that is a loop.
+  - Symmetric = there are /no/ single link arrows (one-way trips) --- every link
+    arrow is a double one (roundtrip).
+  - Antisymmetric = there is /no/ double arrow (going both ways) /unless/ it is
+    a loop.
+  - Transitive = there is /no/ two-leg journey (think flight with a layover)
+    without a shortcut (non-stop flight).
+
+  It is helpful to draw a graph of a relation that is described more abstractly.
+  For an example of an abstract description, here is the relation on the set [1
+  2 3] given by this vector of \ldquo{}conses\rdquo (another way to say /dotted pairs/)
+  representing the ordered pairs:
+
+  [(1 . 1) (1 . 2) (2 . 2) (3 . 3)]
+
+  The three-node four-link graph of that relation appears in [[https://rickneff.github.io/metaphors-be-with-you.html#outline-container-org53bfa2d][section VWF]].
+
+  Identify which features listed above this graph has. Draw the digraphs of some
+  other abstract binary relations, with and without the four features.
+#+end_note
+#+begin_info
+  This graph is reflexive because every node loops to itself.
+  It is antisymmetric because there are no bidirectional arrows.
+  It is transitive because there are no two-leg journeys without a shortcut.
+#+end_info
+** DONE HRR
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  In another multigraph example, what is the connection between [the \ldquo{}four nodes
+  seven links\rdquo] graph and the \ldquo{}birth of graph theory\rdquo?
+
+  What do its nodes and links represent? What is its degree sequence?
+
+  Explore the graph property \ldquo{}Eulerian\rdquo. Does this graph have it? Describe
+  necessary and sufficient conditions for a graph to be Eulerian.
+#+end_note
+#+begin_info
+  A google search showed that this graph and "the birth of graph theory" have a
+  relation to the seven bridges of Koningsberg. The nodes represent land messes
+  the links, the bridges between them. Leonhard Euler showed that if no graph
+  vertices have an odd degree then it can be traveresed by an Eulerian cycle,
+  meaning you can begin at one vertex, traverse the entire graph using each link
+  only once and then come back to the beginning. Leonhard Euler proved this
+  scenerio is not a Eulerian Graph and that it has no solution.
+#+end_info
+** DONE KEO
+   CLOSED: [2020-04-07 Tue 17:30]
+#+begin_note
+  Explore the question: Does a graph\rsquo{}s degree sequence alone contain enough
+  information to reconstruct the graph?
+#+end_note
+#+begin_info
+  It is possible to construct a graph with its degree sequence, but that does
+  not mean that a given degree sequence has only one possible reconstruction.
+  By that reasoning it is very well possible to construct a graph with a degree
+  sequence, but not necessarily the graph it was originally.
+#+end_info
+** DONE HMO
+   CLOSED: [2020-04-07 Tue 17:53]
+#+begin_note
+  Draw the graphs of these ten 2d degree sequences:
+
+  | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   | 4 |   |
+  | 2 | 1 |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 1 | 1 |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 2 | 2 |   |   | 1 | 3 | 1 |   |   |   |   |   |   |   |
+  | 3 | 3 |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 | 1 |   |   |   | 1 |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
+  | 1 |   | 1 |   |   | 2 | 2 |   |   | 1 | 1 |   |   | 1 |
+  |   | 3 |   |   |   |   |   |   |   |   |   |   |   | 1 |
+  |   | 1 |   |   |   | 2 | 2 |   |   | 2 | 2 |   |   | 0 |
+
+#+begin_src dot :file graph1.png
+  graph {
+    size="1.5,1.5"
+    bgcolor=transparent
+    node [shape=circle fontname=Monospace]
+    "1_a"
+    "2" -- "1_b"
+  }
+#+end_src
+
+#+results:
+[[file:graph1.png]]
+
+The above method is laborious. I am going to draw the rest below.
+
+ o   o   o-o  o-o o     o o-o-o o
+  \ /    | |    | |     | | |    \
+o- o -o  o-o  o-o o-o o-o o-o-o   o - o
+                  |              /
+                  o             o
+
+#+end_note
+#+begin_info
+  See above.
+#+end_info
+** DONE HIJ *
+   CLOSED: [2020-04-07 Tue 17:34]
+#+begin_note
+   Why is that? Give a succinct argument justifying that the degrees of all the
+   nodes add up to twice the number of links.
+:HINT:
+ - Hint :: What does /handshaking/ signify?
+:END:
+#+end_note
+#+begin_info
+  Each degree is a link from another node to that node. Because of that each link
+  is counted twice in the degree sequence. Therefore the number of links is half
+  the sum of the degree sequence.
+#+end_info
+** DONE KLE *
+   CLOSED: [2020-04-07 Tue 17:57]
+#+begin_note
+  Investigate this *corollary* (immediately inferable follow-on theorem) to the
+  handshaking theorem:
+
+  /Any undirected graph has an even number of nodes of odd degree./
+#+end_note
+#+begin_info
+  Let G = (v,e) be the graph of vertices and edges Suppose V = {v_1 v_2 … v_n } is
+  the set of vertices in G. The handshake theorem says:
+  2|E(G)| = deg(v_1) + deg(v_2) + … deg(v_n)
+  A sum with an odd number of odds cannot be even, so that implies that there cannot be an odd number of vertices with odd degrees.
+#+end_info
+** DONE HAB
+   CLOSED: [2020-04-07 Tue 17:59]
+#+begin_note
+  Is there (can there exist) a simple graph with degree sequence =[3 2 1 0]=?
+  Justify your answer.
+#+end_note
+#+begin_info
+  Nope. There are no ways to cnnect the 3 node three ways without linking
+  the same node twice or linking itself. Doing either of those things would
+  violate the rules of a simple graph.
+#+end_info
+** TODO HBT *
+#+begin_note
+  List in lisp form (using the shorter representation) all the directed paths in
+  the tournament graph from node =A= to node =F=. How many of these paths
+  include node =G=?
+#+end_note
+#+begin_info
+#+begin_src elisp
+  (list [A F] [A B F] [A B C F] [A B C D F] [A B C D E F]
+      [A B E F] [A B D F] [A C F] [A C E F] [A C D F] [A C D E F]
+      [A D F] [A D E F] [A E F])
+#+end_src
+#+end_info
+* Puzzles
+  No puzzles again this week. Work on GPAOs instead! (If you have finished all
+  those seen so far, pick one from the endnotes of the book, and describe what
+  you did with it.)
